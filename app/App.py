@@ -130,4 +130,5 @@ def run():
             st.warning("Please write Topic Name to Search🔍")
 
 
-run()
+if __name__ == '__main__':
+    run()
