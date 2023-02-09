@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-from bs4 import BeautifulSoup as bs4
+from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from newspaper import Article
 import io
@@ -18,7 +18,7 @@ def extract_news_from_url(url):
 
 def fetch_news_list(url):
     news = extract_news_from_url(url)
-    sp_page = bs4(news, 'xml')  # scrapping data from site
+    sp_page = BeautifulSoup(news, 'xml')  # scrapping data from site
     return sp_page.find_all('item')  # finding news
 
 
