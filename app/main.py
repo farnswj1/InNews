@@ -1,14 +1,13 @@
-import streamlit as st
 from PIL import Image
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from newspaper import Article
+import streamlit as st
 import io
 import nltk
 
 nltk.download('punkt')
-
-st.set_page_config(page_title='InNews 🇮🇳: A Summarised News 📰 Portal', page_icon='./Meta/newspaper.ico')
+st.set_page_config(page_title='News: A Summarised News 📰 Portal', page_icon='./images/newspaper.ico')
 
 
 def extract_news_from_url(url):
@@ -18,8 +17,8 @@ def extract_news_from_url(url):
 
 def fetch_news_list(url):
     news = extract_news_from_url(url)
-    sp_page = BeautifulSoup(news, 'xml')  # scrapping data from site
-    return sp_page.find_all('item')  # finding news
+    page = BeautifulSoup(news, 'xml')  # scrapping data from site
+    return page.find_all('item')  # finding news
 
 
 def fetch_news_poster(url):
@@ -27,7 +26,7 @@ def fetch_news_poster(url):
         raw_data = extract_news_from_url(url)
         filepath = io.BytesIO(raw_data)
     except:
-        filepath = './Meta/no_image.jpg'
+        filepath = './images/no_image.jpg'
 
     image = Image.open(filepath)
     st.image(image, use_column_width=True)
@@ -58,8 +57,8 @@ def display_news(list_of_news, news_quantity):
 
 
 def main():
-    st.title("InNews 🇮🇳: A Summarized News 📰")
-    image = Image.open('./Meta/newspaper.png')
+    st.title("News: A Summarized News 📰 App")
+    image = Image.open('./images/newspaper.png')
 
     col1, col2, col3 = st.columns([3, 5, 3])
 

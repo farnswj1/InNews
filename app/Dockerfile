@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye
+FROM python:3.11-slim-bullseye
 
 # set environment variables
 ENV PYTHONUNBUFFERED 1
@@ -10,9 +10,10 @@ EXPOSE 8501
 WORKDIR /opt/app
 
 # add application and install dependencies
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
+RUN pip install pipenv
+COPY Pipfile Pipfile.lock ./
+RUN pipenv install --system --deploy --ignore-pipfile
 COPY . ./
 
 # run the program
-CMD ["streamlit", "run", "App.py", "--server.address=0.0.0.0"]
+CMD ["supervisord", "-c", "supervisord.conf"]

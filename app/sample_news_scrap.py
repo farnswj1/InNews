@@ -19,8 +19,8 @@ url = 'https://news.google.com/rss/search?q=politics'
 with urlopen(url) as site:  # Open that site, then close after
     data = site.read()  # read data from site
 
-sp_page = BeautifulSoup(data, 'xml')  # scrapping data from site
-news_list = sp_page.find_all('item')  # finding news
+page = BeautifulSoup(data, 'xml')  # scrapping data from site
+news_list = page.find_all('item')  # finding news
 print(news_list)
 
 for news in news_list:  # printing news
