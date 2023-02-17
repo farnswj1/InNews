@@ -11,7 +11,22 @@ services:
     restart: always
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - certbot_data:/var/www/certbot/:ro
+      - ssl_certs:/etc/letsencrypt/:ro
     depends_on:
       - app
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    volumes:
+      - ./certbot/cli.ini:/etc/letsencrypt/cli.ini:ro
+      - certbot_data:/var/www/certbot/:rw
+      - ssl_certs:/etc/letsencrypt/:rw
+    depends_on:
+      - nginx
+volumes:
+  certbot_data:
+  ssl_certs:
